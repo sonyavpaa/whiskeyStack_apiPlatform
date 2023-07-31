@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\WhiskeyCaskRepository;
 use Doctrine\DBAL\Types\Types;
@@ -17,19 +19,21 @@ class WhiskeyCask
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[ApiFilter(SearchFilter::class, strategy: 'partial')]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::ARRAY)]
     private array $distillery = [];
 
     #[ORM\Column(length: 255)]
+    #[ApiFilter(SearchFilter::class, strategy: 'exact')]
     private ?string $country = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $price = null;
+    private ?float $price = 0;
 
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private ?array $tags = null;
